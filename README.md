@@ -1,3 +1,4 @@
+# 🍽️ Chef Gabbar
 **Chef Gabbar** is a modern restaurant food-ordering application that lets customers explore a variety of cuisines and place orders through **Dine-in, Takeaway, or Delivery**.  
 The app allows managers to efficiently manage menus and orders, while customers can share their food experiences through **photos and videos** using the Moments feature.
 
