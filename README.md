@@ -9,6 +9,8 @@ You can view the diagram here:  [ERD](https://lucid.app/lucidchart/aab0347b-cb1d
 
 You can view the Brainstorming here:  [Trello](https://trello.com/b/rFQjyqjc/chef-gabbar)
 
+You can view wireframe here:  [Wiireframe](https://www.figma.com/design/Lb2w5UzeZT1wHxbx4RCG7i/Untitled?node-id=0-1&t=pf6Fj8ZD67yQ3L04-1)
+
 ---
 
 ## Features ✨
