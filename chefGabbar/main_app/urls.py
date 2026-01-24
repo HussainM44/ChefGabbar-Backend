@@ -9,6 +9,7 @@ urlpatterns = [
     path("accounts/signup/",views.signup , name='signup'),
 
     # User Profile
-    path('profile/<int:pk>/', views.UserDetail.as_view(), name = "profile")
+    path('profile/<int:pk>/', views.UserDetail.as_view(), name = "profile"),
+    path('profile/<int:user_id>/update/', views.userUpdate, name = "user_update"),
 
 ]
