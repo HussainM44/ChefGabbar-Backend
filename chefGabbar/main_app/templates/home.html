@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block title %}Chef Gabbar | Home{% endblock %}
+
+{% block content %}
+
+<main>
+{% load static %}
+
+<img
+  src="{% static 'image/logo.jpeg' %}"
+  alt="Chef Gabbar Logo"
+  class="logo"
+/>
+
+
+
+  <h1>Chef Gabbar</h1>
+{% if user.is_authenticated %}
+  <h3>Welcome {{user.username}} </h3>
+  <p>Position : {{user.profile.get_role_display}}</p>
+  {% endif %}
+
+  <p>
+    Welcome to Chef Gabbar, where cooking is an art and every meal is prepared
+    with love, patience, and passion. Our kitchen blends tradition with creativity
+    to bring you flavors that feel familiar yet exciting.
+  </p>
+
+  <p>
+    We believe food should comfort the soul, excite the senses, and create memories
+    worth sharing. From carefully selected ingredients to thoughtfully crafted dishes,
+    quality is at the heart of everything we serve.
+  </p>
+
+  <h2>What Makes Us Special</h2>
+
+
+    <p>Fresh, high-quality ingredients used daily</p>
+    <p>Authentic recipes inspired by real kitchens</p>
+    <p>Food prepared with care, not shortcuts</p>
+    <p>A warm and welcoming dining experience</p>
+
+
+  <h2>Words from kitchen</h2>
+
+  <p>“Cooking is love made visible.”</p>
+  <p>“A recipe has no soul; the cook gives it life.”</p>
+  <p>“Good food is the foundation of genuine happiness.”</p>
+  <p>“People who love to eat are always the best people.”p>
+
+</main>
+
+{% endblock %}
