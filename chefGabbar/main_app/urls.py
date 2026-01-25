@@ -12,4 +12,10 @@ urlpatterns = [
     path('profile/<int:pk>/', views.UserDetail.as_view(), name = "profile"),
     path('profile/<int:user_id>/update/', views.userUpdate, name = "user_update"),
 
+    # Menu List
+    path('menu/list/',views.MenuList.as_view(), name = 'menu_list'),
+
+    # Menu Creation for Managers
+    path('menu/create/', views.MenuCreate.as_view(), name = "menu_create"),
+    
 ]

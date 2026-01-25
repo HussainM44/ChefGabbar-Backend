@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm , PasswordChangeForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile , Menu , Dish
 # to log in new user and create a auth session
 from django.contrib.auth import login
 # to update the auth session of the same user
@@ -99,3 +99,9 @@ def userUpdate(request, user_id):
         },
     )
 
+
+# Menu Creation Views
+
+class MenuList(ListView):
+    model = Menu
+    

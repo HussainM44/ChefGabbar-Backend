@@ -11,17 +11,29 @@
   </head>
   <header>
     <nav>
-      <li>
-        <a href="{% url 'signup' %}">Sign Up</a>
-        <a href="{% url 'login' %}">Login </a>
+        {% if user.is_authenticated %}
+        <li>
+
+        <a href={% url 'profile' user.id %}>Profile</a>
+                <a href="{% url 'menu_list' %}">Menu </a>
+
         <form method='post' action='{% url 'logout' %}'>
           {% csrf_token %}
           <input type='submit' value='Logout'>
         </form>
-        {% if user.is_authenticated %}
-       <a href={% url 'profile' user.id %}>Profile</a>
+
+        </li>
+        {% else %}
+
+        <li>
+
+        <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'login' %}">Login </a>
+        <a href="{% url 'menu_list' %}">Menu </a>
+
+
+        </li>
         {% endif %}
-      </li>
     </nav>
   </header>
   <body>
