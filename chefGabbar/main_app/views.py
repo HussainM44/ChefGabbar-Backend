@@ -6,7 +6,7 @@ from .models import Profile , Menu , Dish
 from django.contrib.auth import login
 # to update the auth session of the same user
 from django.contrib.auth import update_session_auth_hash
-from .forms import profileForm, userUpdateForm
+from .forms import profileForm, userUpdateForm , menuCreateForm , dishCreateForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
@@ -100,8 +100,33 @@ def userUpdate(request, user_id):
     )
 
 
-# Menu Creation Views
+# Menu Views
 
 class MenuList(ListView):
     model = Menu
-    
+
+def menuCreate(request , user_id):
+    user = User.objects.get(id = user_id)
+
+    if request.method == "POST":
+        menu_form = menuCreateForm(request.POST , instance = user)
+
+        if menu_form.is_valid():
+            menu = menu_form.save(commit=False)
+            menu.user = user
+            menu.save()
+            if menu.save():
+                dish_form = dishCreateForm(request.POST)
+
+                dish = dish_form.save(commit=False)
+                dish.menu = dish
+                dish.save()
+                error_message = "invalid dish"
+            return redirect('/menu/list/')
+        else:
+            error_message = "Invalid Info - Try again"
+    else:
+        menu_form = menuCreateForm()
+        dish_form = dishCreateForm()
+        error_message = None
+    return render(request , "main_app/menuCreate.html", {"menu_form":menuCreateForm , "dish_form":dishCreateForm, "error_message":error_message})
