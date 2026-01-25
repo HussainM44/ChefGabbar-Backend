@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <h2>Edit {{user.username}} Profile</h2>
+{% if user.profile.count %}
+<form method='POST' action="{% url 'add_profile' user.id %}" enctype="multipart/form-data">
+{% else %}
 <form method='POST' action="{% url 'user_update' user.id %}" enctype="multipart/form-data">
+  {% endif %}
   {% csrf_token %}
   {{user_form.as_p}}
+  {{password_form.as_p}}
   {{profile_form.as_p}}
   <input type='submit' value='Update'>
 </form>
+
+
+
 {% endblock %}

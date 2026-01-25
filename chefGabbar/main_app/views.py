@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm , PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Profile
+# to log in new user and create a auth session
 from django.contrib.auth import login
+# to update the auth session of the same user
+from django.contrib.auth import update_session_auth_hash
 from .forms import profileForm, userUpdateForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
@@ -33,7 +36,7 @@ def signup(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            # logging in the same user
+            # logging in the same user that signed up
             login(request, user)
             return redirect("/")
         else:
@@ -56,7 +59,6 @@ def signup(request):
 
 # User Profile views
 
-
 class UserDetail(DetailView):
     model = User
 
@@ -68,16 +70,23 @@ def userUpdate(request, user_id):
     if request.method == "POST":
         user_form = userUpdateForm(request.POST, instance=user)
         profile_form = profileForm(request.POST, request.FILES, instance=profile)
-        if user_form.is_valid() and profile_form.is_valid():
+        # passwordChangeForm requires user and request instead of instance
+        password_form = PasswordChangeForm(user , request.POST)
+        if user_form.is_valid() and profile_form.is_valid() and password_form.is_valid():
             user_form.save()
             profile_form.save()
-            login(request , user)
+            password_form.save()
+            # to update the session for the same user and keep user logged in
+            update_session_auth_hash(request, user)
+            # login(request, user)
             return redirect("/")
         else:
-            error_message = "Invalid Sign Up- TRY AGAIN"
+            error_message = "Invalid info- TRY AGAIN"
     else:
         user_form = userUpdateForm(instance=user)
         profile_form = profileForm(instance=profile)
+        password_form = PasswordChangeForm(user)
+
         error_message = None
     return render(
         request,
@@ -85,6 +94,8 @@ def userUpdate(request, user_id):
         {
             "user_form": user_form,
             "profile_form": profile_form,
+            'password_form': password_form,
             "error_message": error_message,
         },
     )
+
