@@ -2,6 +2,10 @@
 
 {% block content%}
 
+{% if user.is_superuser %}
+<a href="{% url 'menu_create' %}">Create Your Cuisine</a>
+{%endif%}
+
 {% for menu in menu_list %}
 <h1>{{menu.cuisine}}</h1>
 {% for dish in menu.dish_set.all %}
@@ -11,6 +15,7 @@
 {% endfor %}
 </br>
 <a href = "{% url 'dish_create' menu.pk %}">Add A Dish</a>
+<a href = "{% url 'menu_delete' menu.pk %}">Delete {{menu.cuisine}}</a>
 {% endfor %}
 
 {%endblock%}

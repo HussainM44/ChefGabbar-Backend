@@ -121,6 +121,10 @@ class MenuCreate(CreateView):
     def get_success_url(self):
         return reverse("dish_create" , kwargs={'pk': self.object.pk})
 
+class MenuDelete(DeleteView):
+    model = Menu
+    success_url = '/menu/list/'
+
 class DishCreate(CreateView):
     model = Dish
     fields =['name', 'description', 'dish_image']
