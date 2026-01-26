@@ -9,6 +9,8 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import profileForm, userUpdateForm , menuCreateForm , dishCreateForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from django.urls import reverse
+
 
 # Create your views here.
 
@@ -108,18 +110,21 @@ class MenuList(ListView):
 class MenuCreate(CreateView):
     model = Menu
     fields = [ 'cuisine']
-    success_url = "/menu/list/"
+    success_url = "/menu/<int:pk>/dish/create/"
     # this is adding user in menu manually that is logged in
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-# class DishCreate(CreateView):
-#     model = Dish
-#     fields =['name', 'description', 'dish_image']
-#     success_url = "/menu/list/"
-#     def form_valid(self, form):
-#         form.instance.menu = self.request.menu
-#         return super().form_valid(form)
+    def get_success_url(self):
+        return reverse("dish_create" , kwargs={'pk': self.object.pk})
 
+class DishCreate(CreateView):
+    model = Dish
+    fields =['name', 'description', 'dish_image']
+    success_url = "/menu/list/"
+    def form_valid(self, form):
+        menu = Menu.objects.get(pk = self.kwargs['pk'])
+        form.instance.menu = menu
+        return super().form_valid(form)
 

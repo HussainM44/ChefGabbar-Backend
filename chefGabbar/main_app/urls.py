@@ -17,6 +17,6 @@ urlpatterns = [
 
     # Menu Creation for Managers
     path('menu/create/', views.MenuCreate.as_view(), name = "menu_create"),
-    # path('menu/<int:pk>/dish/create/', views.DishCreate.as_view(), name = "dish_create"),
+    path('menu/<int:pk>/dish/create/', views.DishCreate.as_view(), name = "dish_create"),
 
 ]
