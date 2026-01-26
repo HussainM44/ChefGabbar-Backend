@@ -1,7 +1,16 @@
+{% extends 'base.html' %}
 
+{% block content %}
+{% if object %}
+<h1>Edit {{object.name}}</h1>
+{% else %}
+<h1> Add Dish</h1>
+{% endif %}
   <form method="POST" action="" enctype="multipart/form-data" >
   {% csrf_token %}
 {{form.as_p}}
   <input type="submit" value="Submit">
 </form>
 
+
+{% endblock %}

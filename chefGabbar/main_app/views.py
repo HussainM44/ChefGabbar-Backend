@@ -138,3 +138,7 @@ class DishDelete(DeleteView):
     success_url = "/menu/list/"
 
 
+class DishUpdate(UpdateView):
+    model = Dish
+    fields = ['name', 'description','dish_image']
+    success_url = "/menu/list/"
