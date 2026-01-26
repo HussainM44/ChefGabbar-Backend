@@ -7,6 +7,7 @@
 {% for dish in menu.dish_set.all %}
 <p>{{dish.name}} - {{dish.description}} </p>
 {% endfor %}
+<a href = "{% url 'dish_create' menu.pk %}">Add A Dish</a>
 {% endfor %}
 
 {%endblock%}
