@@ -10,6 +10,11 @@ ROLE = (
     ("C","Customer"),
     ('M','Manager'),
     )
+SERVICES = (
+    ("R", "Dine-in"),
+    ("D", "Delivery"),
+    ("T","Take Away"),
+    )
 
 # User Auth
 
@@ -21,6 +26,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user} is a {self.role}'
+
+
 
 
 class Menu(models.Model):
@@ -37,4 +44,15 @@ class Dish(models.Model):
     dish_image = models.ImageField(upload_to="main_app/static/uploads", default= "")
 
     def __str__(self):
-        return f"{self.menu} contains {self.name}"
+        return f"{self.name}"
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
+    item = models.ManyToManyField(Dish)
+    service_type = models.CharField(max_length= 1 , choices= SERVICES , default=[0][0] )
+
+    def __str__(self):
+        for dish in self.item.all():
+            items = dish.name
+            return f"{self.user.username} ordered: {items}"
