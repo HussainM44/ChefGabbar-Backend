@@ -10,12 +10,22 @@
 <h1>{{menu.cuisine}}</h1>
 {% for dish in menu.dish_set.all %}
 <p>{{dish.name}} - {{dish.price}} BHD - {{dish.description}} </p>
+{% if user.is_superuser %}
 <a href= "{% url 'dish_delete' dish.pk %}">Delete {{dish.name}}</a>
 <a href= "{% url 'dish_update' dish.pk %}">Update {{dish.name}}</a>
+{%endif%}
+
 {% endfor %}
 </br>
+</br>
+{% if user.is_superuser %}
 <a href = "{% url 'dish_create' menu.pk %}">Add A Dish</a>
+<br>
 <a href = "{% url 'menu_delete' menu.pk %}">Delete {{menu.cuisine}}</a>
+{%endif%}
+
 {% endfor %}
 
 {%endblock%}
+{% if user.is_superuser %}
+{%endif%}
