@@ -19,6 +19,8 @@
                 <a href="{% url 'menu_list' %}">Menu </a>
                 {% if user.is_superuser %}
           <a href="{% url 'order_list' %}">Orders </a>
+          {% else %}
+          <a href="{% url 'order_list' %}">Cart </a>
           {% endif %}
           <form method='post' action='{% url 'logout' %}'>
           {% csrf_token %}

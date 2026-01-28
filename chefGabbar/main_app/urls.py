@@ -26,4 +26,8 @@ urlpatterns = [
     path('order/list/', views.OrderList.as_view(),name = 'order_list'),
     path('order/<int:order_id>/update/', views.statusUpdate, name = 'status_update'),
 
+    #Adding items to cart for User
+    path('/add_dish/<int:dish_id>/' , views.addDish, name = 'add_dish'),
+    path('cart/list' , views.OrderList.as_view(), name='order_list'),
+    
 ]

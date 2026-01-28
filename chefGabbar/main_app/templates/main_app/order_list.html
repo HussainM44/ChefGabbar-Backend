@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% comment %} This view is for Manager / Superuser {% endcomment %}
+{% if user.is_superuser %}
 <h1>Order list </h1>
 {% for order in order_list %}
 
@@ -13,6 +15,7 @@
     </ul>
 <p>Service Type: {{order.get_service_type_display}}</p>
 {{order.get_status_display}}
+<p>Total = {{order.total_price}} BHD </p>
 
 <form method="POST" action ="{% url 'status_update' order.id %}">
   {% csrf_token %}
@@ -20,7 +23,26 @@
   <input type="submit" value="Change Status">
 </form>
 
-<p>Total = {{order.total_price}} BHD </p>
+
 {% endfor %}
 
+{% else %}
+
+<h1>Cart</h1>
+{% for order in order_list %}
+{% if order.user == request.user %}
+{% for item in order.item.all %}
+<ul>
+  <li>{{item}} - {{item.price}} BHD </li>
+</ul>
+
+
+{% endfor %}
+<p>Total = {{order.total_price}} BHD </p>
+{% endif %}
+{% endfor %}
+
+
+
+{% endif %}
 {% endblock %}

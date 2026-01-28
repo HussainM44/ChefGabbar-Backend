@@ -171,7 +171,7 @@ class DishUpdate(UpdateView):
 class OrderList(ListView):
     model = Order
     ordering = ["-id"]
-
+    # to send the data of other model to the the cbv
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = orderStatusChange()
@@ -189,3 +189,20 @@ def statusUpdate(request, order_id):
             orderStatusChange(instance=order)
 
     return redirect("order_list")
+
+
+def addDish(request , dish_id):
+    dish = Dish.objects.get(id=dish_id)
+
+    order = Order.objects.filter(user = request.user ).first()
+    order.item.add(dish)
+
+    if not order:
+        order = Order.objects.create(user = request.user)
+        order.item.add(dish)
+
+    return redirect('/menu/list/')
+
+
+class OrderList(ListView):
+    model = Order
