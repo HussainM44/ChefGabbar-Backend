@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.models import User
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('',views.home, name='home'),
@@ -31,5 +33,7 @@ urlpatterns = [
     path('cart/list' , views.OrderList.as_view(), name='order_list'),
     path('order/<int:order_id>/service_type/', views.serviceType, name = 'service_type'),
 
+    # User Moments
+    path('moments/list/', views.MomentList.as_view(), name='moment_list')
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (
     PasswordChangeForm,
 )
 from django.contrib.auth.models import User
-from .models import Profile, Menu, Dish, Order
+from .models import Profile, Menu, Dish, Order , Moment
 from django.http import JsonResponse
 # to log in new user and create a auth session
 from django.contrib.auth import login
@@ -220,3 +220,7 @@ def serviceType(request , order_id):
     return redirect("order_list")
 
 
+# Moment Views
+
+class MomentList(ListView):
+    model = Moment
